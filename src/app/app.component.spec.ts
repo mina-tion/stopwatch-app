@@ -16,10 +16,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'stapwatch-app'`, () => {
+  it(`should have as title 'stopwatch-app'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('stapwatch-app');
+    expect(app.title).toEqual('stopwatch-app');
   });
 
   it('should render title', () => {

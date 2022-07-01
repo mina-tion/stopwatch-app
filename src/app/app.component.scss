@@ -1,0 +1,36 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 50vw;
+}
+
+.container {
+  background-image: linear-gradient(to right, rgba(124, 20, 176, 0.533), rgb(66, 149, 208));
+  padding: 15px 20px;
+  border-radius: 10px;
+  color: aliceblue;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 3px 6px rgb(4, 15, 23, 0.1),
+    0 3px 6px rgba(10, 29, 43, 0.2);
+
+  .stopwatch {
+    font-size: 35px;
+    margin-bottom: 15px;
+  }
+
+  .button-container {
+    button {
+      background: #FFF;
+      border: none;
+      outline: 0;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      color: #6288
+    }
+  }
+}
