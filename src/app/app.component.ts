@@ -6,7 +6,7 @@ import { interval, VirtualTimeScheduler } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
  
   title = 'stopwatch-app';
 
@@ -14,33 +14,41 @@ export class AppComponent {
   sec: any = '0' + 0;
 
   startTimer: any;
-  isRunning: boolean = false
+  isRunning: boolean = false;
+  timeCounter$ = interval(1000);
+ 
+  ngOnInit(): void {
+    this.isRunning = false; 
+    
+  }  
 
   start(): void { 
+    console.log('START TIMER, isrun = ', this.isRunning)
     if(!this.isRunning) { 
       this.isRunning = true;
-      this.startTimer = setInterval(()=>{ 
-        this.sec++;
-        this.sec = this.sec<10?0+this.sec:this.sec
-        if(this.sec === 60)
-        { 
-          this.min++;
-          this.min = this.min<10?0+this.min:this.min
-          this.sec = '0' + 0
-        }
+      this.startTimer = this.timeCounter$.subscribe((sec:any)=> {
+        console.log(sec)
+        this.sec++
+        this.sec = this.sec < 10 ? "0" + this.sec : this.sec
+          if(this.sec === 60)
+          { 
+            this.min++;
+            this.min = this.min < 10 ? "0" + this.min : this.min
+            this.sec = '0' + 0
+          }
       })
-    } else this.stop();
+    }
   }
 
   stop(): void { 
-    clearInterval(this.startTimer);
+    this.sec = '0' + 0; 
     this.isRunning = false;
+    this.startTimer.unsubscribe()
   }
-  /* ngOnInit(): void {
-    const obj$ = interval(1000)
-    obj$.subscribe((d:any)=>{
-      console.log(d)
-      this.data = d
-    })
-  } */
+
+  reset(): void { 
+    /* this.sec = '0' + 0; 
+    this.isRunning = false;
+    this.startTimer.unsubscribe() */
+  }
 }
