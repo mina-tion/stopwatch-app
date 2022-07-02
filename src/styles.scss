@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@200;300;400;500;600;700&display=swap');
+@import './mixins.scss';
 
 * { 
     box-sizing: border-box;
@@ -8,6 +9,6 @@
 body { 
     padding: 0;
     margin: 0;
-    background-color: rgba(3, 7, 93, 0.49);
-    font-family: 'Kantumruy+Pro', sans-serif;
+    background-color: $background;
+    font-family: $defaultFont;
 }

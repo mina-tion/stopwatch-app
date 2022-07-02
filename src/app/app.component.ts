@@ -79,6 +79,7 @@ export class AppComponent implements OnInit {
   }
   reset(): void {
     this.resetVars();
+    this.start()
   }
 
   resetVars(): void {
