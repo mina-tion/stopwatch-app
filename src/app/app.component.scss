@@ -29,10 +29,11 @@
 
     button {
       @include button-style();
-      &:not(:last-child){ 
+
+      &:not(:last-child) {
         margin-right: 10px;
       }
-      
+
       &:hover {
         background: rgb(160, 194, 255);
         transition: 0.2s;

@@ -2,13 +2,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@200;300;400;500;600;700&display=swap');
 @import './mixins.scss';
 
-* { 
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
 }
 
-body { 
-    padding: 0;
-    margin: 0;
-    background-color: $background;
-    font-family: $defaultFont;
+body {
+  padding: 0;
+  margin: 0;
+  background-color: $background;
+  font-family: $defaultFont;
 }
