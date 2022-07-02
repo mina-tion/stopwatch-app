@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { interval, fromEvent, debounceTime } from 'rxjs';
-import { delay, buffer, filter, map } from 'rxjs/operators';
+import { interval, fromEvent, debounceTime, race } from 'rxjs';
+import { buffer,filter, map, bufferCount, first, repeat } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -20,27 +20,29 @@ export class AppComponent implements OnInit {
   resetButton = document.getElementsByClassName('btn-wait');
   onWait$ = fromEvent(this.resetButton, 'click');
 
+  doubleClickDuration = 500;
+
+
   ngOnInit(): void {
     this.isRunning = false;
-    this.onWait$
-      .pipe(
-        buffer(this.onWait$.pipe(debounceTime(500))),
-        map(clickArray=>clickArray.length),
-        filter((len) => len === 2)
-      )
-      .subscribe((event) => this.wait());
 
-      this.onWait$.pipe(
-      delay(1000))
-      .subscribe(suggestion => {
-        console.log('suggestion');
-      });  
-  }
-  wait(): void {
-    console.log('Double Click!');
-    if (this.isRunning) {
-      console.log('wait');
-    }
+      const debounce$ = this.onWait$
+          .pipe(debounceTime(this.doubleClickDuration));
+
+     const clickLimit$ = this.onWait$
+          .pipe(bufferCount(2),);
+          
+     const bufferGate$ = race(debounce$, clickLimit$)
+          .pipe(
+            first(),
+            repeat(),
+          );
+    this.onWait$
+          .pipe(
+            buffer(bufferGate$),
+            map(clicks => clicks.length),
+            filter(len => len ===2 )
+          ).subscribe(() => this.wait());   
   }
 
   start(): void {
@@ -67,6 +69,14 @@ export class AppComponent implements OnInit {
     }
   }
 
+  wait(): void {
+    if (this.isRunning) {
+       this.isRunning = false;
+       if (this.startTimer) {
+        this.startTimer.unsubscribe();
+      }
+    }
+  }
   reset(): void {
     this.resetVars();
   }
